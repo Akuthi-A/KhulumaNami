@@ -41,7 +41,7 @@ The project evolves in two major phases:
 ## 📁 Project Structure
 
 ```
-khuluma-nami/
+client-nami/
 ├── client/
 │   └── ChatClient.java # Handles client-side logic and user interaction
 │
