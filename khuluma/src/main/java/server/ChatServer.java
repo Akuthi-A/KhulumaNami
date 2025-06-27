@@ -18,13 +18,23 @@ public class ChatServer {
             socket = server.accept();
             System.out.println("Connection established");
 
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String msg = in.readLine();
-            out = new PrintWriter(socket.getOutputStream(), true);
-//            System.out.println("Server: " + out.);
-            out.println("Server: " + msg);
+            setupStreams();
+            handleChat();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void setupStreams() throws IOException {
+        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        out = new PrintWriter(socket.getOutputStream(), true);
+    }
+
+    private void handleChat() throws IOException {
+        String msg = in.readLine();
+
+//            System.out.println("Server: " + out.);
+        out.println("Server: " + msg);
     }
 }
