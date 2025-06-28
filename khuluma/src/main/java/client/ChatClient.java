@@ -16,8 +16,11 @@ public class ChatClient {
                 clientSocket = new Socket(addr, port);
 
                 setupStreams();
-                sendMessage();
-                readResponse();
+                while (true) {
+                    sendMessage();
+                    readResponse();
+                }
+
 
             } catch (IOException e) {
                 throw new RuntimeException("Error msg: " + e);
@@ -32,14 +35,26 @@ public class ChatClient {
 
         private void sendMessage() throws IOException {
             userInput = new BufferedReader(new InputStreamReader(System.in));
-            System.out.println("Enter a message");
+            System.out.print("You: ");
             String msg = userInput.readLine();
-            out.println(msg);
+
+            if (msg.toLowerCase().equals("quit")) {
+                clientSocket.close();
+            }
+            else out.println(msg);
         }
 
         private void readResponse() throws IOException {
             String response = in.readLine();
-            System.out.println("Response from Server: " + response);
+            if (response == null) {
+                System.out.println("Server connection closed");
+            }
+            else { System.out.println("Response from Server: " + response); }
         }
+
+
+    public static void main(String[] args) {
+        new ChatClient("localhost", 9929);
+    }
 
 }

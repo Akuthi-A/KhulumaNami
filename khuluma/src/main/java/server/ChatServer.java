@@ -1,5 +1,7 @@
 package server;
 
+import client.ChatClient;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,6 +12,7 @@ public class ChatServer {
     private Socket socket = null;
     private BufferedReader in = null;
     private PrintWriter out = null;
+    static boolean isChatting = true;
 
     public ChatServer(int port) {
         try {
@@ -19,7 +22,8 @@ public class ChatServer {
             System.out.println("Connection established");
 
             setupStreams();
-            handleChat();
+            while (isChatting) { handleChat(); }
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -34,7 +38,18 @@ public class ChatServer {
     private void handleChat() throws IOException {
         String msg = in.readLine();
 
-//            System.out.println("Server: " + out.);
-        out.println("Server: " + msg);
+        if (msg == null) {
+            System.out.println("Client connection ayisekho");
+            isChatting = false;
+            server.close();
+        }
+        else {
+            out.println("Server says -> " + msg);
+        }
+
+    }
+
+    public static void main(String[] args) {
+        new ChatServer(9929);
     }
 }
