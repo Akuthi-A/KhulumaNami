@@ -3,7 +3,6 @@ package server;
 import java.io.*;
 import java.net.Socket;
 
-import static server.ChatServer.isChatting;
 
 public class ClientHandler implements Runnable{
     /*
@@ -11,7 +10,9 @@ public class ClientHandler implements Runnable{
     private Socket clientSocket = null;
     private BufferedReader in = null;
     private PrintWriter out = null;
+    private boolean isChatting = true;
     private String username = "Raskalnikov";
+
 
 
     public ClientHandler(Socket socket) {
@@ -42,6 +43,9 @@ public class ClientHandler implements Runnable{
             System.out.println("Client connection ayisekho");
             isChatting = false;
 //            server.close();
+            in.close();
+            out.close();
+            clientSocket.close();
         }
         else {
             out.println("Server says -> " + msg);
