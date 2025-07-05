@@ -21,9 +21,11 @@ public class ChatServer {
             socket = server.accept();
             System.out.println("Connection established");
 
-            setupStreams();
-            while (isChatting) { handleChat(); }
-
+//            setupStreams();
+//            while (isChatting) { handleChat(); }
+            ClientHandler handler = new ClientHandler(socket);
+            Thread newThread = new Thread(handler);
+            newThread.start();
 
         } catch (IOException e) {
             throw new RuntimeException(e);

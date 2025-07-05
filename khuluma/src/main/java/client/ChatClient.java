@@ -30,11 +30,11 @@ public class ChatClient {
         private void setupStreams() throws IOException {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            userInput = new BufferedReader(new InputStreamReader(System.in));
         }
 
 
         private void sendMessage() throws IOException {
-            userInput = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("You: ");
             String msg = userInput.readLine();
 
