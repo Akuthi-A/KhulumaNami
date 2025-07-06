@@ -20,6 +20,8 @@ public class ChatClient {
                 System.out.print("Enter your username: ");
                 this.username = userInput.readLine();
                 out.println(this.username);
+                String welcome = in.readLine();
+                System.out.println(welcome);
 
                 while (true) {
                     sendMessage();
@@ -45,6 +47,9 @@ public class ChatClient {
             String msg = userInput.readLine();
 
             if (msg.toLowerCase().equals("quit")) {
+//                out.println(this.username + " has left the chat.");
+                in.close();
+                out.close();
                 clientSocket.close();
             }
             else out.println(msg);

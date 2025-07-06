@@ -17,13 +17,17 @@ public class ClientHandler implements Runnable{
 
     public ClientHandler(Socket socket) {
         clientSocket = socket;
-//        this.username = username;
     }
     @Override
     public void run() {
         try {
             setupStreams();
             this.username = in.readLine();
+
+            System.out.println(this.username + " has joined the chat.");
+
+            out.println("Welcome " + this.username + "!!");
+
 
             while (isChatting) { handleChat(); }
 
@@ -50,7 +54,7 @@ public class ClientHandler implements Runnable{
             clientSocket.close();
         }
         else {
-            out.println("["+this.username+"] says-> " + msg);
+            out.println("["+this.username+"] uthi-> " + msg);
         }
 
     }
