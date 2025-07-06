@@ -8,6 +8,7 @@ public class ChatClient {
         private BufferedReader userInput = null;
         private BufferedReader in = null;
         private PrintWriter out = null;
+        private String username = "user";
 
 
         public ChatClient(String addr, int port) {
@@ -16,6 +17,10 @@ public class ChatClient {
                 clientSocket = new Socket(addr, port);
 
                 setupStreams();
+                System.out.print("Enter your username: ");
+                this.username = userInput.readLine();
+                out.println(this.username);
+
                 while (true) {
                     sendMessage();
                     readResponse();
@@ -35,7 +40,8 @@ public class ChatClient {
 
 
         private void sendMessage() throws IOException {
-            System.out.print("You: ");
+
+            System.out.print("["+this.username+"]" + ": ");
             String msg = userInput.readLine();
 
             if (msg.toLowerCase().equals("quit")) {
@@ -49,7 +55,7 @@ public class ChatClient {
             if (response == null) {
                 System.out.println("Server connection closed");
             }
-            else { System.out.println("Response from Server: " + response); }
+            else { System.out.println(response); }
         }
 
 
