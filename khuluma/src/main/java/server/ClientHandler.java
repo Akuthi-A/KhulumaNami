@@ -45,17 +45,28 @@ public class ClientHandler implements Runnable{
     private void handleChat() throws IOException {
         String msg = in.readLine();
 
+
         if (msg == null) {
             System.out.println("Client connection ayisekho");
+            out.println(this.username + " has left the chat");
+            ChatServer.connectedClients.remove(this);
             isChatting = false;
-//            server.close();
             in.close();
             out.close();
             clientSocket.close();
+            return;
         }
-        else {
-            out.println("["+this.username+"] uthi-> " + msg);
+        String formattedMessage = "["+this.username+"]" + " uthi-> " + msg;
+
+        for (ClientHandler client: ChatServer.connectedClients) {
+                client.sendMessage(formattedMessage);
         }
 
+
+
+    }
+
+    private void sendMessage(String message) {
+        out.println(message);
     }
 }
